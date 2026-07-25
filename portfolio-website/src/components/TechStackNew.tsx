@@ -56,6 +56,39 @@ const techStack: TechItem[][] = [
   ],
 ];
 
+const techColors: Record<string, string> = {
+  Python: "#3776AB",
+  JavaScript: "#F7DF1E",
+  TypeScript: "#3178C6",
+  "C++": "#00599C",
+  HTML: "#E34F26",
+  CSS: "#1572B6",
+  Bash: "#4EAA25",
+  React: "#61DAFB",
+  "Next.js": "#E0E0E0",
+  Bootstrap: "#7952B3",
+  "Node.js": "#339933",
+  Flask: "#D5D5D5",
+  FastAPI: "#009688",
+  Pandas: "#150458",
+  NumPy: "#4DABCF",
+  Tailwind: "#06B6D4",
+  MySQL: "#4479A1",
+  PostgreSQL: "#4169E1",
+  MongoDB: "#47A248",
+  Firebase: "#FFCA28",
+  Docker: "#2496ED",
+  Azure: "#0089D6",
+  Git: "#F05032",
+  GitHub: "#FFFFFF",
+  Linux: "#FCC624",
+  AWS: "#FF9900",
+  "VS Code": "#007ACC",
+  Vercel: "#FFFFFF",
+  Figma: "#F24E1E",
+  "MS Office": "#D83B01",
+};
+
 const TechStackNew = () => {
   return (
     <div className="techstack-new">
@@ -81,20 +114,24 @@ const TechStackNew = () => {
         <div className="techstack-pyramid">
           {techStack.map((row, rowIndex) => (
             <div key={rowIndex} className="techstack-row">
-              {row.map((tech, techIndex) => (
-                <a
-                  key={techIndex}
-                  href={tech.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="techstack-item"
-                  title={tech.name}
-                  data-cursor="disable"
-                >
-                  <img src={tech.icon} alt={tech.name} />
-                  <span>{tech.name}</span>
-                </a>
-              ))}
+              {row.map((tech, techIndex) => {
+                const color = techColors[tech.name] || "#F97316";
+                return (
+                  <a
+                    key={techIndex}
+                    href={tech.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="techstack-item"
+                    title={tech.name}
+                    data-cursor="disable"
+                    style={{ "--skill-color": color } as React.CSSProperties}
+                  >
+                    <img src={tech.icon} alt={tech.name} />
+                    <span>{tech.name}</span>
+                  </a>
+                );
+              })}
             </div>
           ))}
         </div>

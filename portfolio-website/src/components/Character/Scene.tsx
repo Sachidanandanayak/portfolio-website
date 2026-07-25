@@ -55,7 +55,7 @@ const Scene = () => {
       const clock = new THREE.Clock();
 
       const light = setLighting(scene);
-      let progress = setProgress((value) => setLoading(value));
+      setProgress((value) => setLoading(value));
       const { loadCharacter } = setCharacter(renderer, scene, camera);
       let isMounted = true;
 
@@ -71,12 +71,8 @@ const Scene = () => {
             scene.add(character);
             headBone = character.getObjectByName("spine006") || null;
             screenLight = character.getObjectByName("screenlight") || null;
-            progress.loaded().then(() => {
-              setTimeout(() => {
-                light.turnOnLights();
-                animations.startIntro();
-              }, 2500);
-            });
+            light.turnOnLights();
+            animations.startIntro();
             window.addEventListener("resize", () =>
               handleResize(renderer, camera, canvasDiv, character)
             );
@@ -84,12 +80,7 @@ const Scene = () => {
         })
         .catch((err) => {
           console.error("Skipping character load due to error:", err);
-          alert("Error loading 3D character: " + (err.message || err.toString()));
-          progress.loaded().then(() => {
-            setTimeout(() => {
-              light.turnOnLights();
-            }, 2500);
-          });
+          light.turnOnLights();
         });
 
       let mouse = { x: 0, y: 0 },

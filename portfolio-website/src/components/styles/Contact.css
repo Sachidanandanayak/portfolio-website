@@ -16,6 +16,7 @@
   text-transform: uppercase;
   margin: 0;
   margin-bottom: 30px;
+  color: #F8FAFC;
 }
 .contact-flex {
   display: flex;
@@ -24,8 +25,9 @@
 .contact-flex h4 {
   font-weight: 500;
   margin: 0;
-  opacity: 0.6;
   font-size: 14px;
+  color: #F59E0B;
+  letter-spacing: 1px;
 }
 .contact-box {
   display: flex;
@@ -35,20 +37,35 @@
   margin-top: 8px;
   margin-bottom: 15px;
   font-size: 14px;
+  color: #F8FAFC;
 }
 a.contact-social {
   font-size: 16px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid rgba(249, 115, 22, 0.35);
   margin-bottom: 8px;
+  color: #F8FAFC;
+  transition: color 0.25s ease, border-color 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+a.contact-social svg {
+  color: #F59E0B;
+}
+a.contact-social:hover {
+  color: #F97316;
+  border-color: #F97316;
 }
 .contact-box h2 {
   font-weight: 400;
   font-size: 16px;
   margin: 0;
   line-height: 22px;
+  color: #F8FAFC;
 }
 .contact-box h2 > span {
-  color: var(--accentColor);
+  color: #FF6B00;
+  text-shadow: 0 0 15px rgba(255, 107, 0, 0.35);
 }
 .contact-box h5 {
   font-size: 14px;
@@ -56,7 +73,7 @@ a.contact-social {
   line-height: 14px;
   display: flex;
   gap: 8px;
-  opacity: 0.5;
+  color: #94A3B8;
 }
 @media only screen and (min-width: 600px) {
   .contact-section h3 {

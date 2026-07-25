@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import "./styles/Career.css";
 import { config } from "../config";
+import { setAllTimeline } from "./utils/GsapScroll";
 
 const getDisplayYear = (period: string) => {
   if (period.includes("Present")) return "NOW";
@@ -10,6 +12,9 @@ const getDisplayYear = (period: string) => {
 };
 
 const Career = () => {
+  useEffect(() => {
+    setAllTimeline();
+  }, []);
   return (
     <div className="career-section section-container">
       <div className="career-container">

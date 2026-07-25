@@ -26,9 +26,17 @@
 .header ul li {
   margin-left: 0px;
   letter-spacing: 0.8px;
-  color: #ccc;
+  color: #F8FAFC;
   font-weight: 600;
   cursor: pointer;
+  transition: color 0.25s ease;
+}
+.header ul li:hover {
+  color: #F97316;
+}
+.header ul li.active,
+.header ul li:active {
+  color: #F59E0B;
 }
 .navbar-connect {
   position: absolute;
@@ -39,6 +47,11 @@
   font-size: 13px;
   letter-spacing: 0.8px;
   font-weight: 500;
+  color: #CBD5E1;
+  transition: color 0.25s ease;
+}
+.navbar-connect:hover {
+  color: #F97316;
 }
 .navbar-title {
   font-weight: 700;

@@ -17,7 +17,7 @@
   line-height: 70px;
   font-weight: 400;
   text-align: center;
-  background: linear-gradient(0deg, #00CFFF, #ffffff);
+  background: linear-gradient(0deg, #FF6B00, #F8FAFC);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -29,6 +29,8 @@
 .career-section h2>span {
   font-family: "Geist", sans-serif;
   font-weight: 300;
+  color: #FF6B00;
+  -webkit-text-fill-color: #FF6B00;
 }
 
 .career-info {
@@ -50,6 +52,7 @@
   font-weight: 300;
   margin: 0;
   line-height: 20px;
+  color: #CBD5E1;
 }
 
 .career-info-in {
@@ -64,6 +67,7 @@
   margin: 0;
   font-weight: 500;
   line-height: 45px;
+  color: #F8FAFC;
 }
 
 .career-info h4 {
@@ -72,6 +76,7 @@
   letter-spacing: 0.8px;
   font-weight: 500;
   margin: 0;
+  color: #F8FAFC;
 }
 
 .career-info h5 {
@@ -80,7 +85,7 @@
   font-size: 20px;
   text-transform: capitalize;
   margin: 10px 0px;
-  color: var(--accentColor);
+  color: #F97316;
 }
 
 .career-timeline {
@@ -91,8 +96,8 @@
   width: 3px;
   height: 100%;
   background-image: linear-gradient(to top,
-      #00CFFF 20%,
-      var(--accentColor) 50%,
+      #F97316 20%,
+      rgba(249, 115, 22, 0.35) 50%,
       transparent 95%);
   max-height: 0%;
 }
@@ -102,12 +107,12 @@
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 50%);
-  background-color: #00CFFF;
+  background-color: #F59E0B;
   width: 10px;
   height: 10px;
   border-radius: 50px;
-  box-shadow: 0px 0px 5px 2px #00CFFF, 0px 0px 15px 8px #3ABEFF,
-    0px 0px 110px 20px #7FE7FF;
+  box-shadow: 0px 0px 5px 2px #F97316, 0px 0px 15px 8px #FF6B00,
+    0px 0px 20px 5px rgba(249, 115, 22, 0.50);
   animation: timeline 0.8s linear infinite forwards;
 }
 
@@ -118,7 +123,7 @@
   50%,
   70%,
   90% {
-    box-shadow: 0px 0px 5px 2px #00CFFF;
+    box-shadow: 0px 0px 5px 2px #F97316;
   }
 
   10%,
@@ -127,19 +132,19 @@
   100%,
   64%,
   80% {
-    box-shadow: 0px 0px 5px 2px #00CFFF, 0px 0px 15px 5px #3ABEFF,
-      0px 0px 110px 20px #7FE7FF;
+    box-shadow: 0px 0px 5px 2px #F97316, 0px 0px 15px 5px #FF6B00,
+      0px 0px 20px 5px rgba(249, 115, 22, 0.50);
   }
 }
 
 @keyframes timeline2 {
   0% {
-    box-shadow: 0px 0px 5px 2px #00CFFF;
+    box-shadow: 0px 0px 5px 2px #F97316;
   }
 
   100% {
-    box-shadow: 0px 0px 5px 2px #00CFFF, 0px 0px 15px 5px #3ABEFF,
-      0px 0px 110px 20px #7FE7FF;
+    box-shadow: 0px 0px 5px 2px #F97316, 0px 0px 15px 5px #FF6B00,
+      0px 0px 20px 5px rgba(249, 115, 22, 0.50);
   }
 }
 

@@ -4,7 +4,7 @@ import { lenis } from "../Navbar";
 
 export function initialFX() {
   const mainEl = document.getElementsByTagName("main")[0];
-  if (!mainEl || mainEl.classList.contains("main-active")) {
+  if (!mainEl) {
     return;
   }
   
@@ -71,12 +71,13 @@ export function initialFX() {
     }
   );
   gsap.fromTo(
-    [".header", ".icons-section", ".nav-fade"],
-    { opacity: 0 },
+    [".header", ".icons-section", ".nav-fade", ".landing-actions", ".hero-photo-frame"],
+    { opacity: 0, y: 20 },
     {
       opacity: 1,
       duration: 1.2,
       ease: "power1.inOut",
+      y: 0,
       delay: 0.1,
     }
   );

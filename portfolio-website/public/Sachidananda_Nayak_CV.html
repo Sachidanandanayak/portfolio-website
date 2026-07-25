@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sachidananda Nayak — CV</title>
+  <title>Sachidananda Nayak — Resume</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
@@ -13,16 +13,16 @@
 
     :root {
       --primary: #1a1a2e;
-      --accent: #4361ee;
+      --accent: #0088ff;
       --accent-light: #e8ecff;
       --text: #1a1a2e;
-      --text-secondary: #555;
-      --text-muted: #777;
+      --text-secondary: #444;
+      --text-muted: #666;
       --border: #e0e0e0;
       --bg: #ffffff;
       --section-bg: #f8f9fc;
-      --tag-bg: #edf0ff;
-      --tag-text: #3a56d4;
+      --tag-bg: #eef4ff;
+      --tag-text: #0066cc;
     }
 
     html { font-size: 14px; }
@@ -49,36 +49,14 @@
     .cv-header {
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       color: #fff;
-      padding: 48px 56px 40px;
+      padding: 44px 52px 36px;
       position: relative;
       overflow: hidden;
     }
 
-    .cv-header::before {
-      content: '';
-      position: absolute;
-      top: -60px;
-      right: -60px;
-      width: 220px;
-      height: 220px;
-      background: rgba(67, 97, 238, 0.15);
-      border-radius: 50%;
-    }
-
-    .cv-header::after {
-      content: '';
-      position: absolute;
-      bottom: -40px;
-      right: 100px;
-      width: 120px;
-      height: 120px;
-      background: rgba(67, 97, 238, 0.1);
-      border-radius: 50%;
-    }
-
     .cv-header h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
+      font-size: 2.6rem;
       font-weight: 700;
       letter-spacing: 1px;
       margin-bottom: 4px;
@@ -87,12 +65,11 @@
     }
 
     .cv-header .subtitle {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 400;
-      color: rgba(255, 255, 255, 0.8);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 20px;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 2px;
+      margin-bottom: 16px;
       position: relative;
       z-index: 1;
     }
@@ -100,20 +77,18 @@
     .cv-header .contact-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 18px;
+      gap: 16px;
       font-size: 0.88rem;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255, 255, 255, 0.9);
       position: relative;
       z-index: 1;
     }
 
     .cv-header .contact-row a {
-      color: rgba(255, 255, 255, 0.9);
+      color: #ffffff;
       text-decoration: none;
-      transition: color 0.2s;
+      font-weight: 500;
     }
-
-    .cv-header .contact-row a:hover { color: #fff; }
 
     .contact-item {
       display: flex;
@@ -121,43 +96,42 @@
       gap: 6px;
     }
 
-    .contact-icon {
-      font-size: 1rem;
-      opacity: 0.8;
-    }
-
     /* ===== BODY ===== */
     .cv-body {
-      padding: 40px 56px 48px;
+      padding: 36px 52px 44px;
     }
 
-    /* ===== SECTION ===== */
     .section {
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .section:last-child { margin-bottom: 0; }
 
     .section-title {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--accent);
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--accent);
+      letter-spacing: 2.5px;
+      color: #0066cc;
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #0066cc;
       display: inline-block;
     }
 
-    /* ===== SUMMARY ===== */
     .summary p {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--text-secondary);
-      line-height: 1.75;
+      line-height: 1.7;
     }
 
-    /* ===== EDUCATION ===== */
+    /* EDUCATION */
+    .edu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
     .edu-item {
       display: flex;
       justify-content: space-between;
@@ -166,48 +140,47 @@
 
     .edu-degree {
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       color: var(--text);
     }
 
     .edu-details {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-secondary);
-      margin-top: 4px;
+      margin-top: 2px;
     }
 
     .edu-period {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 500;
+      font-size: 0.82rem;
+      font-weight: 600;
       white-space: nowrap;
-      background: var(--accent-light);
-      padding: 4px 14px;
+      background: var(--tag-bg);
+      padding: 3px 12px;
       border-radius: 20px;
       color: var(--tag-text);
     }
 
-    /* ===== SKILLS GRID ===== */
+    /* SKILLS */
     .skills-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 14px;
     }
 
     .skill-category {
       background: var(--section-bg);
-      padding: 18px 22px;
-      border-radius: 10px;
+      padding: 14px 18px;
+      border-radius: 8px;
       border: 1px solid #eee;
     }
 
     .skill-category h4 {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       color: var(--primary);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .skill-tags {
@@ -219,238 +192,164 @@
     .skill-tag {
       background: var(--tag-bg);
       color: var(--tag-text);
-      padding: 4px 12px;
-      border-radius: 20px;
+      padding: 3px 10px;
+      border-radius: 16px;
       font-size: 0.78rem;
       font-weight: 500;
-      letter-spacing: 0.3px;
     }
 
-    /* ===== PROJECTS ===== */
+    /* PROJECTS */
     .project-item {
-      padding: 18px 0;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
 
-    .project-item:last-child { border-bottom: none; }
+    .project-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
     .project-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 6px;
+      align-items: center;
+      margin-bottom: 4px;
     }
 
     .project-title {
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.98rem;
       color: var(--text);
-    }
-
-    .project-category {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--tag-text);
-      background: var(--tag-bg);
-      padding: 3px 12px;
-      border-radius: 20px;
-      white-space: nowrap;
     }
 
     .project-tech {
       font-size: 0.82rem;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .project-desc {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    /* ===== HACKATHONS ===== */
-    .hackathon-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .hackathon-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      background: var(--section-bg);
-      border-radius: 8px;
-      border: 1px solid #eee;
-    }
-
-    .hackathon-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .hackathon-name {
+      color: #0066cc;
       font-weight: 600;
-      font-size: 0.88rem;
-      color: var(--text);
-    }
-
-    .hackathon-type {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    /* ===== EXPERTISE ===== */
-    .expertise-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-    }
-
-    .expertise-item {
-      text-align: center;
-      padding: 18px 14px;
-      background: var(--section-bg);
-      border-radius: 10px;
-      border: 1px solid #eee;
-    }
-
-    .expertise-icon {
-      font-size: 1.5rem;
       margin-bottom: 6px;
     }
 
-    .expertise-label {
-      font-weight: 700;
-      font-size: 0.82rem;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .expertise-desc {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    /* ===== CAREER OBJECTIVE ===== */
-    .objective {
-      background: linear-gradient(135deg, #f8f9fc, #edf0ff);
-      padding: 22px 28px;
-      border-radius: 10px;
-      border-left: 4px solid var(--accent);
-    }
-
-    .objective p {
-      font-size: 0.92rem;
+    .project-bullet {
+      font-size: 0.86rem;
       color: var(--text-secondary);
-      line-height: 1.7;
-      font-style: italic;
+      margin-left: 18px;
+      margin-bottom: 4px;
+      line-height: 1.5;
     }
 
-    /* ===== FOOTER ===== */
-    .cv-footer {
-      text-align: center;
-      padding: 20px 56px;
+    /* CERTIFICATIONS */
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cert-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      padding: 8px 14px;
       background: var(--section-bg);
-      border-top: 1px solid var(--border);
+      border-radius: 6px;
     }
 
-    .cv-footer p {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .cv-footer a {
-      color: var(--accent);
-      text-decoration: none;
+    .cert-name {
       font-weight: 600;
+      color: var(--text);
     }
 
-    /* ===== PRINT STYLES ===== */
+    .cert-date {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .drive-link {
+      font-size: 0.84rem;
+      margin-top: 10px;
+      color: var(--text-secondary);
+    }
+
+    .drive-link a {
+      color: #0066cc;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    /* ACHIEVEMENTS */
+    .achieve-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .achieve-item {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      margin-left: 18px;
+      line-height: 1.5;
+    }
+
+    /* PRINT STYLES */
     @media print {
       html { font-size: 12px; }
       body { background: #fff; }
-      .cv-page {
-        margin: 0;
-        box-shadow: none;
-        border-radius: 0;
-        max-width: 100%;
-      }
-      .cv-header { padding: 36px 44px 32px; }
-      .cv-body { padding: 30px 44px 36px; }
-      .section { margin-bottom: 24px; }
-      .skill-category, .hackathon-item, .expertise-item, .objective {
-        break-inside: avoid;
-      }
-      .project-item { break-inside: avoid; }
-    }
-
-    @media (max-width: 600px) {
-      .cv-header { padding: 32px 28px; }
-      .cv-body { padding: 28px; }
-      .skills-grid,
-      .hackathon-grid { grid-template-columns: 1fr; }
-      .expertise-grid { grid-template-columns: 1fr 1fr; }
-      .edu-item { flex-direction: column; gap: 8px; }
-      .project-header { flex-direction: column; gap: 6px; }
+      .cv-page { margin: 0; box-shadow: none; border-radius: 0; max-width: 100%; }
+      .cv-header { padding: 28px 36px; }
+      .cv-body { padding: 24px 36px; }
     }
   </style>
 </head>
 <body>
   <div class="cv-page">
-    <!-- ===== HEADER ===== -->
+    <!-- HEADER -->
     <header class="cv-header">
-      <h1>Sachidananda Nayak</h1>
-      <p class="subtitle">Cloud Engineer · Full Stack Developer</p>
+      <h1>SACHIDANANDA NAYAK</h1>
+      <p class="subtitle">Bengaluru, Karnataka | +91 93535 98537 | sachidanandanayak495@gmail.com</p>
       <div class="contact-row">
         <div class="contact-item">
-          <span class="contact-icon">📍</span>
-          <span>Bangalore, India</span>
+          <span>🔗 LinkedIn:</span>
+          <a href="https://www.linkedin.com/in/sachidananda-nayak-185169363/" target="_blank">linkedin.com/in/sachidananda-nayak</a>
         </div>
         <div class="contact-item">
-          <span class="contact-icon">✉️</span>
-          <a href="mailto:metisachin@gmail.com">metisachin@gmail.com</a>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">🔗</span>
-          <a href="https://www.linkedin.com/in/sachidananda-nayak-185169363/" target="_blank">LinkedIn</a>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">💻</span>
-          <a href="https://github.com/Sachidanandanayak" target="_blank">GitHub</a>
+          <span>💻 GitHub:</span>
+          <a href="https://github.com/Sachidanandanayak" target="_blank">github.com/Sachidanandanayak</a>
         </div>
       </div>
     </header>
 
-    <!-- ===== BODY ===== -->
+    <!-- BODY -->
     <main class="cv-body">
-
-      <!-- PROFESSIONAL SUMMARY -->
+      <!-- SUMMARY -->
       <section class="section summary">
         <h2 class="section-title">Professional Summary</h2>
         <p>
-          Passionate Cloud Engineer and Full Stack Developer with strong expertise in AWS, Docker, modern web technologies, and scalable cloud solutions. Skilled in building secure, high-performance applications and solving real-world problems through cloud computing, software engineering, and emerging technologies. Proficient in Full Stack Development using React, Node.js, and MongoDB, alongside backend development in Python and Java. Well-versed in leveraging GitHub, GitHub Actions, and Artificial Intelligence for advanced problem solving and modern development workflows.
+          Computer Science undergraduate with hands-on experience building full-stack and cloud-native applications using React, FastAPI, and AWS. Skilled in CI/CD automation, containerization, and machine learning, with a track record of delivering production-style projects and competing in national-level hackathons.
         </p>
       </section>
 
       <!-- EDUCATION -->
       <section class="section">
         <h2 class="section-title">Education</h2>
-        <div class="edu-item">
-          <div>
-            <div class="edu-degree">B.Tech in Computer Science Engineering</div>
-            <div class="edu-details">
-              Building a strong foundation in programming, data structures, operating systems, databases, networking, cloud computing, and software engineering.
+        <div class="edu-list">
+          <div class="edu-item">
+            <div>
+              <div class="edu-degree">Garden City University, Bengaluru</div>
+              <div class="edu-details">B.Tech in Computer Science Engineering — CGPA: 8.2/10</div>
             </div>
+            <span class="edu-period">2023 – 2027</span>
           </div>
-          <span class="edu-period">Present</span>
+          <div class="edu-item">
+            <div>
+              <div class="edu-degree">Prism PU College, Dharwad</div>
+              <div class="edu-details">Class 12 (DPUE), Aggregate: 78%</div>
+            </div>
+            <span class="edu-period">2021 – 2023</span>
+          </div>
+          <div class="edu-item">
+            <div>
+              <div class="edu-degree">Jnana Ganga High School, Devadurga</div>
+              <div class="edu-details">Class 10 (KSEEB), Aggregate: 80.96%</div>
+            </div>
+            <span class="edu-period">2020 – 2021</span>
+          </div>
         </div>
       </section>
 
@@ -464,18 +363,17 @@
               <span class="skill-tag">AWS</span>
               <span class="skill-tag">Azure</span>
               <span class="skill-tag">Docker</span>
-              <span class="skill-tag">Kubernetes</span>
               <span class="skill-tag">Terraform</span>
               <span class="skill-tag">GitHub Actions</span>
+              <span class="skill-tag">CI/CD</span>
               <span class="skill-tag">Linux</span>
               <span class="skill-tag">Git</span>
-              <span class="skill-tag">Vercel</span>
             </div>
           </div>
           <div class="skill-category">
             <h4>Frontend</h4>
             <div class="skill-tags">
-              <span class="skill-tag">React</span>
+              <span class="skill-tag">React.js</span>
               <span class="skill-tag">Next.js</span>
               <span class="skill-tag">TypeScript</span>
               <span class="skill-tag">JavaScript</span>
@@ -486,26 +384,29 @@
             </div>
           </div>
           <div class="skill-category">
-            <h4>Backend & Languages</h4>
+            <h4>Backend & Database</h4>
             <div class="skill-tags">
               <span class="skill-tag">Node.js</span>
               <span class="skill-tag">Express.js</span>
-              <span class="skill-tag">Flask</span>
-              <span class="skill-tag">FastAPI</span>
-              <span class="skill-tag">Python</span>
-              <span class="skill-tag">C++</span>
-              <span class="skill-tag">Bash</span>
-            </div>
-          </div>
-          <div class="skill-category">
-            <h4>Databases & Data</h4>
-            <div class="skill-tags">
+              <span class="skill-tag">Python (Flask, FastAPI)</span>
+              <span class="skill-tag">Java</span>
               <span class="skill-tag">MongoDB</span>
               <span class="skill-tag">MySQL</span>
               <span class="skill-tag">PostgreSQL</span>
-              <span class="skill-tag">Firebase</span>
-              <span class="skill-tag">Pandas</span>
-              <span class="skill-tag">NumPy</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h4>Tools</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">VS Code</span>
+              <span class="skill-tag">PyCharm</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">GitHub</span>
+              <span class="skill-tag">Google Colab</span>
+              <span class="skill-tag">NetBeans</span>
+              <span class="skill-tag">MS Office</span>
+              <span class="skill-tag">Photoshop</span>
+              <span class="skill-tag">Canva</span>
             </div>
           </div>
         </div>
@@ -513,144 +414,88 @@
 
       <!-- PROJECTS -->
       <section class="section">
-        <h2 class="section-title">Key Projects</h2>
+        <h2 class="section-title">Projects</h2>
+
+        <div class="project-item">
+          <div class="project-header">
+            <span class="project-title">Nexus Cloud – Enterprise Cloud Dashboard</span>
+          </div>
+          <div class="project-tech">React, TypeScript, FastAPI, MySQL, Docker</div>
+          <ul>
+            <li class="project-bullet">Architected a full-stack cloud management platform using React 18 and FastAPI, following clean layered architecture</li>
+            <li class="project-bullet">Implemented JWT authentication (OAuth2 Bearer) and built real-time monitoring dashboards with live-updating charts</li>
+            <li class="project-bullet">Designed an interactive CI/CD pipeline visualization featuring an 8-step deployment workflow and live build log terminal</li>
+            <li class="project-bullet">Containerized the full stack with Docker Compose; modeled 9 database entities using SQLAlchemy ORM and Alembic</li>
+          </ul>
+        </div>
 
         <div class="project-item">
           <div class="project-header">
             <span class="project-title">Cloud-Native Automated CI/CD Pipeline</span>
-            <span class="project-category">Cloud / DevOps</span>
           </div>
-          <div class="project-tech">AWS · Docker · Terraform · GitHub Actions · Kubernetes</div>
-          <p class="project-desc">
-            Designed and implemented a complete cloud-native CI/CD pipeline that automatically builds, tests, scans, containerizes, and deploys applications using AWS infrastructure and Infrastructure as Code.
-          </p>
+          <div class="project-tech">AWS, Docker, Terraform, GitHub Actions</div>
+          <ul>
+            <li class="project-bullet">Architected a highly available, cloud-native CI/CD pipeline on AWS with Terraform, supporting 50+ daily builds</li>
+            <li class="project-bullet">Integrated GitHub Actions with Docker, reducing manual deployment time by 60% and improving release reliability</li>
+          </ul>
         </div>
 
         <div class="project-item">
           <div class="project-header">
-            <span class="project-title">Student Management System</span>
-            <span class="project-category">Full Stack</span>
+            <span class="project-title">Real-Time Phishing Detection Engine</span>
           </div>
-          <div class="project-tech">React · Node.js · Express · MongoDB · JWT Authentication</div>
-          <p class="project-desc">
-            A complete role-based student management platform supporting administrators, teachers, and students with secure authentication and dashboard analytics.
-          </p>
-        </div>
-
-        <div class="project-item">
-          <div class="project-header">
-            <span class="project-title">Real-Time Phishing Detection</span>
-            <span class="project-category">AI / Security</span>
-          </div>
-          <div class="project-tech">FastAPI · Python · Machine Learning · AWS</div>
-          <p class="project-desc">
-            Machine Learning based phishing detection system capable of analyzing suspicious URLs in real time using intelligent threat detection algorithms.
-          </p>
-        </div>
-
-        <div class="project-item">
-          <div class="project-header">
-            <span class="project-title">Secure Multi-Party Computation</span>
-            <span class="project-category">Blockchain</span>
-          </div>
-          <div class="project-tech">Blockchain · Cryptography · React · Node.js</div>
-          <p class="project-desc">
-            Privacy-preserving blockchain application implementing secure multi-party computation techniques for confidential data sharing.
-          </p>
+          <div class="project-tech">FastAPI, Python, Machine Learning, AWS</div>
+          <ul>
+            <li class="project-bullet">Engineered a real-time threat detection API using Scikit-learn machine learning algorithms, achieving 95% accuracy</li>
+            <li class="project-bullet">Deployed on AWS, achieving sub-200ms endpoint response times for real-time URL flagging</li>
+          </ul>
         </div>
       </section>
 
-      <!-- HACKATHONS -->
+      <!-- CERTIFICATIONS -->
       <section class="section">
-        <h2 class="section-title">Hackathons & Events</h2>
-        <div class="hackathon-grid">
-          <div class="hackathon-item">
-            <div class="hackathon-dot"></div>
-            <div>
-              <div class="hackathon-name">Fusion X – Dizzy Hackers</div>
-              <div class="hackathon-type">Mega 24-Hour Hackathon</div>
-            </div>
+        <h2 class="section-title">Certifications</h2>
+        <div class="cert-list">
+          <div class="cert-item">
+            <span class="cert-name">● Agentic AI Engineering Specialization</span>
+            <span class="cert-date">Jul 2026</span>
           </div>
-          <div class="hackathon-item">
-            <div class="hackathon-dot"></div>
-            <div>
-              <div class="hackathon-name">INCEPTRIX Hackathon 2.0</div>
-              <div class="hackathon-type">National Hackathon</div>
-            </div>
+          <div class="cert-item">
+            <span class="cert-name">● AWS Cloud Practitioner Essentials</span>
+            <span class="cert-date">Jun 2026</span>
           </div>
-          <div class="hackathon-item">
-            <div class="hackathon-dot"></div>
-            <div>
-              <div class="hackathon-name">Tech Fusion Hackverse 2025</div>
-              <div class="hackathon-type">Technical Competition</div>
-            </div>
+          <div class="cert-item">
+            <span class="cert-name">● Data Analytics Job Simulation, Deloitte (Forage)</span>
+            <span class="cert-date">Jun 2026</span>
           </div>
-          <div class="hackathon-item">
-            <div class="hackathon-dot"></div>
-            <div>
-              <div class="hackathon-name">Hack Summit – SRMIST Chennai</div>
-              <div class="hackathon-type">National Hackathon</div>
-            </div>
+          <div class="cert-item">
+            <span class="cert-name">● Data Science Essentials with Python, Cisco</span>
+            <span class="cert-date">Sep 2025</span>
+          </div>
+          <div class="cert-item">
+            <span class="cert-name">● Introduction to Data Science, Cisco</span>
+            <span class="cert-date">Jul 2025</span>
           </div>
         </div>
+        <p class="drive-link">
+          <strong>Certificate Folder:</strong> <a href="https://drive.google.com/drive/folders/1pZclup2yFH7xrgEoSBQ6NcCn_qF16UGT" target="_blank">drive.google.com/drive/folders/1pZclup2yFH7xrgEoSBQ6NcCn_qF16UGT</a>
+        </p>
       </section>
 
-      <!-- AREAS OF EXPERTISE -->
+      <!-- ACHIEVEMENTS -->
       <section class="section">
-        <h2 class="section-title">Areas of Expertise</h2>
-        <div class="expertise-grid">
-          <div class="expertise-item">
-            <div class="expertise-icon">☁️</div>
-            <div class="expertise-label">Cloud Architecture</div>
-            <div class="expertise-desc">Scalable cloud-native architectures & CI/CD</div>
-          </div>
-          <div class="expertise-item">
-            <div class="expertise-icon">🖥️</div>
-            <div class="expertise-label">Full Stack Dev</div>
-            <div class="expertise-desc">Responsive, secure web applications</div>
-          </div>
-          <div class="expertise-item">
-            <div class="expertise-icon">🔐</div>
-            <div class="expertise-label">Cybersecurity</div>
-            <div class="expertise-desc">Threat detection & privacy-preserving apps</div>
-          </div>
-          <div class="expertise-item">
-            <div class="expertise-icon">🧠</div>
-            <div class="expertise-label">AI & ML</div>
-            <div class="expertise-desc">Intelligent threat detection systems</div>
-          </div>
-          <div class="expertise-item">
-            <div class="expertise-icon">⛓️</div>
-            <div class="expertise-label">Blockchain</div>
-            <div class="expertise-desc">Cryptographic protocols & DApps</div>
-          </div>
-          <div class="expertise-item">
-            <div class="expertise-icon">🚀</div>
-            <div class="expertise-label">DevOps</div>
-            <div class="expertise-desc">Docker, K8s, Terraform & IaC</div>
-          </div>
-        </div>
+        <h2 class="section-title">Achievements</h2>
+        <ul class="achieve-list">
+          <li class="achieve-item">Secured All India Rank (AIR) 9185 under the ST category in JEE Main during Class 12 and successfully qualified for JEE Advanced</li>
+          <li class="achieve-item">Qualified for Smart India Hackathon (SIH) 2024 & 2025 at the college level</li>
+          <li class="achieve-item">Selected among the Top 20 finalists out of 100 teams at INCEPTRIX Hackathon 2.0, Jain Faculty of Engineering & Technology, as part of Team Delta Force</li>
+          <li class="achieve-item">Shortlisted and participated in a 3-day hackathon at Presidency University, Bengaluru</li>
+          <li class="achieve-item">Shortlisted and participated in a 36-hour hackathon at SRM University, Chennai</li>
+          <li class="achieve-item">Shortlisted and participated in a 24-hour hackathon at Dayananda Sagar Academy of Technology and Management</li>
+          <li class="achieve-item">Participated in the Google Agentic Day event</li>
+        </ul>
       </section>
-
-      <!-- CAREER OBJECTIVE -->
-      <section class="section">
-        <h2 class="section-title">Career Objective</h2>
-        <div class="objective">
-          <p>
-            Aspiring to build a successful career as a Cloud Engineer by mastering AWS, Docker, Kubernetes, Terraform, DevOps, and scalable cloud-native architectures while continuously learning emerging technologies and contributing to impactful software solutions.
-          </p>
-        </div>
-      </section>
-
     </main>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="cv-footer">
-      <p>
-        Portfolio: <a href="https://github.com/Sachidanandanayak" target="_blank">github.com/Sachidanandanayak</a>
-        &nbsp;·&nbsp; References available upon request
-      </p>
-    </footer>
   </div>
 </body>
 </html>
