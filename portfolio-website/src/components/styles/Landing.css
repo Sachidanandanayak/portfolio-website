@@ -25,6 +25,8 @@
   position: relative;
   z-index: 10;
   gap: clamp(30px, 4vw, 60px);
+  padding: 0 clamp(20px, 3vw, 40px) 0 clamp(65px, 6vw, 95px);
+  box-sizing: border-box;
 }
 
 /* Left Hero Column */
@@ -239,7 +241,7 @@ h2.landing-info-h2 {
 .hero-video-frame {
   position: relative;
   width: 100%;
-  max-width: 720px;
+  max-width: clamp(400px, 35vw, 550px);
   aspect-ratio: 16 / 9;
   z-index: 10;
   display: flex;

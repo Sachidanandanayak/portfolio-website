@@ -24,6 +24,8 @@
   gap: 60px;
   position: relative;
   z-index: 10;
+  padding: 0 clamp(20px, 3vw, 40px) 0 clamp(65px, 6vw, 95px);
+  box-sizing: border-box;
   opacity: 1; /* Safe fallback: 100% visible by default */
   transform: translateX(0) scale(1);
   transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
