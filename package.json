@@ -1,0 +1,8 @@
+{
+  "name": "portfolio-website-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd portfolio-website && npm install && npm run build"
+  }
+}
