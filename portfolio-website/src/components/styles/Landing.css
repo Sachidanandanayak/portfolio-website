@@ -406,11 +406,55 @@ h2.landing-info-h2 {
     flex-wrap: wrap;
   }
 
+  /* Full Width Uncropped Video Display on Mobile */
   .hero-video-frame {
+    width: calc(100% - 32px);
+    max-width: 600px;
+    height: auto;
+    aspect-ratio: auto;
+    margin: 24px auto 0;
+  }
+
+  .hero-video-ambient-glow {
+    inset: -8px;
+    filter: blur(20px);
+    opacity: 0.7;
+  }
+
+  .hero-video-card {
     width: 100%;
-    max-width: 500px;
-    aspect-ratio: 16 / 9;
-    margin-inline: auto;
+    height: auto;
+    border-radius: 20px;
+    border: 1.5px solid rgba(249, 115, 22, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(249, 115, 22, 0.15);
+  }
+
+  .hero-video-element {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 20px;
+    display: block;
+  }
+
+  /* Compact 44px Circular Video Control Button on Mobile */
+  .hero-video-controls-row {
+    margin-top: 12px;
+  }
+
+  .hero-video-control-btn {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    max-width: 44px;
+    padding: 0;
+    border-radius: 50%;
+    gap: 0;
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.35), 0 4px 12px rgba(0, 0, 0, 0.6);
+  }
+
+  .hero-video-control-btn .btn-text {
+    display: none;
   }
 }
 

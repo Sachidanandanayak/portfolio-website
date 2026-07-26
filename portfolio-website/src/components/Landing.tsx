@@ -227,10 +227,10 @@ const Landing = () => {
                 onClick={handleControlBtnClick}
                 aria-label={
                   isPlaying
-                    ? "Pause Introduction Video"
+                    ? "Pause introduction"
                     : hasEnded
-                    ? "Replay Introduction Video"
-                    : "Resume Introduction Video"
+                    ? "Replay introduction"
+                    : "Resume introduction"
                 }
               >
                 {isPlaying ? (
@@ -238,7 +238,7 @@ const Landing = () => {
                     <svg className="control-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
                       <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
                     </svg>
-                    <span>PAUSE INTRODUCTION</span>
+                    <span className="btn-text">PAUSE INTRODUCTION</span>
                   </>
                 ) : hasEnded ? (
                   <>
@@ -246,14 +246,14 @@ const Landing = () => {
                       <polyline points="1 4 1 10 7 10"/>
                       <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
                     </svg>
-                    <span>REPLAY INTRODUCTION</span>
+                    <span className="btn-text">REPLAY INTRODUCTION</span>
                   </>
                 ) : (
                   <>
                     <svg className="control-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
                       <path d="M8 5v14l11-7z"/>
                     </svg>
-                    <span>RESUME INTRODUCTION</span>
+                    <span className="btn-text">RESUME INTRODUCTION</span>
                   </>
                 )}
               </button>
