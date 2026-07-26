@@ -5,7 +5,6 @@ import Contact from "./Contact";
 import Cursor from "./Cursor";
 import Landing from "./Landing";
 import Navbar from "./Navbar";
-import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import TechStackNew from "./TechStackNew";
@@ -46,7 +45,6 @@ const MainContainer = () => {
       <PremiumLoader />
       <Cursor />
       <Navbar />
-      <SocialIcons />
       <div className="container-main">
         <Landing />
         <About />

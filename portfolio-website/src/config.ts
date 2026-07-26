@@ -151,8 +151,8 @@ export const config = {
     develop: {
       title: "CLOUD & DEVOPS",
       description: "Building scalable cloud infrastructure & automated DevOps pipelines",
-      details: "Designing and implementing cloud-native architectures, automated CI/CD pipelines, and robust infrastructure using AWS, Azure, Docker, Kubernetes, Terraform, and GitHub Actions.",
-      tools: ["AWS", "Azure", "Docker", "Kubernetes", "Terraform", "GitHub Actions", "CI/CD", "Linux", "Git"]
+      details: "Designing and implementing cloud-native architectures, automated CI/CD pipelines, and robust infrastructure using AWS, Azure, Docker, Terraform, and GitHub Actions.",
+      tools: ["AWS", "Azure", "Docker", "Terraform", "GitHub Actions", "CI/CD", "Linux", "Git"]
     },
     design: {
       title: "FULL STACK & BACKEND",

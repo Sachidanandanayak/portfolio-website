@@ -59,24 +59,24 @@ const SocialIcons = () => {
 
   return (
     <div className="icons-section">
-      <div className="social-icons" data-cursor="icons" id="social">
+      <div className="social-icons" data-cursor="disable" id="social">
         <span>
-          <a href={config.contact.github} target="_blank" rel="noopener noreferrer">
+          <a href={config.contact.github} target="_blank" rel="noopener noreferrer" data-cursor="disable">
             <FaGithub />
           </a>
         </span>
         <span>
-          <a href={config.contact.linkedin} target="_blank" rel="noopener noreferrer">
+          <a href={config.contact.linkedin} target="_blank" rel="noopener noreferrer" data-cursor="disable">
             <FaLinkedinIn />
           </a>
         </span>
         <span>
-          <a href={config.contact.twitter} target="_blank" rel="noopener noreferrer">
+          <a href={config.contact.twitter} target="_blank" rel="noopener noreferrer" data-cursor="disable">
             <FaXTwitter />
           </a>
         </span>
         <span>
-          <a href={config.contact.instagram} target="_blank" rel="noopener noreferrer">
+          <a href={config.contact.instagram} target="_blank" rel="noopener noreferrer" data-cursor="disable">
             <FaInstagram />
           </a>
         </span>

@@ -10,7 +10,7 @@
   justify-content: center;
   padding: 90px clamp(20px, 4vw, 50px) 50px;
   box-sizing: border-box;
-  background-color: #050505;
+  background-color: #000000;
   overflow: hidden;
 }
 
@@ -291,6 +291,97 @@ h2.landing-info-h2 {
   display: block;
 }
 
+/* Hero Video Overlay & Play/Replay Button */
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(5, 5, 5, 0.20) 0%, rgba(5, 5, 5, 0.40) 100%);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 24px;
+  z-index: 5;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.hero-video-play-btn {
+  background: linear-gradient(135deg, #FF6B00 0%, #F97316 100%);
+  color: #050505;
+  font-family: "Geist", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(249, 115, 22, 0.45), 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.25s ease;
+  pointer-events: auto;
+}
+
+.hero-video-play-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(249, 115, 22, 0.65), 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.hero-video-play-btn .video-duration {
+  background: rgba(5, 5, 5, 0.25);
+  color: #050505;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.hero-video-play-btn.replay-mode {
+  background: linear-gradient(135deg, #F97316 0%, #FF6B00 100%);
+}
+
+/* Floating Toast Hint Pill */
+.hero-video-toast {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: rgba(5, 5, 5, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(249, 115, 22, 0.55);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.35), 0 8px 25px rgba(0, 0, 0, 0.7);
+  border-radius: 30px;
+  padding: 8px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #FFFFFF;
+  font-family: "Geist", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hero-video-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.hero-video-toast .toast-icon {
+  color: #F97316;
+}
+
 /* Laptop Responsiveness */
 @media screen and (max-width: 1280px) {
   .hero-video-frame {
@@ -302,6 +393,8 @@ h2.landing-info-h2 {
 @media screen and (max-width: 1024px) {
   .landing-section {
     padding-top: 100px;
+    padding-left: 16px;
+    padding-right: 16px;
     height: auto;
     min-height: auto;
   }
@@ -309,29 +402,90 @@ h2.landing-info-h2 {
   .landing-container {
     flex-direction: column;
     text-align: center;
-    gap: 36px;
+    gap: 32px;
+    padding: 0 10px;
   }
 
   .landing-left {
     align-items: center;
     max-width: 100%;
+    width: 100%;
   }
 
   .landing-intro h1 {
-    font-size: 34px;
+    font-size: clamp(24px, 7.5vw, 36px);
+    line-height: 1.2;
+    letter-spacing: 1px;
+    word-break: keep-all;
+    overflow-wrap: normal;
+  }
+
+  .landing-intro h1 .first-name,
+  .landing-intro h1 .last-name {
+    display: inline-block;
+    white-space: nowrap;
+    word-break: keep-all;
   }
 
   .cta-button-row {
     justify-content: center;
+    width: 100%;
   }
 
   .call-row {
     justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
   }
 
   .hero-video-frame {
     width: 100%;
     max-width: 500px;
+    aspect-ratio: 16 / 9;
     margin-inline: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .landing-section {
+    padding-top: 90px;
+    padding-bottom: 30px;
+  }
+
+  .landing-intro h2 {
+    font-size: 15px;
+    letter-spacing: 1.5px;
+  }
+
+  .landing-intro h1 {
+    font-size: clamp(20px, 6.8vw, 28px);
+    letter-spacing: 0.5px;
+  }
+
+  h2.landing-info-h2 {
+    font-size: clamp(22px, 7vw, 28px);
+  }
+
+  .landing-h2-info {
+    font-size: clamp(16px, 5vw, 20px);
+  }
+
+  .cta-button-row {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .cta-btn {
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  .call-row {
+    gap: 10px;
+  }
+
+  .phone-number {
+    font-size: 14px;
   }
 }

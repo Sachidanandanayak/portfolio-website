@@ -282,14 +282,16 @@
 /* Mobile & Tablet Responsiveness */
 @media only screen and (max-width: 1024px) {
   .about-section {
-    padding: 40px 20px;
+    padding: 40px 16px;
+    margin: 30px auto;
     min-height: auto;
   }
 
   .about-container {
     flex-direction: column;
     text-align: center;
-    gap: 36px;
+    gap: 32px;
+    padding: 0 10px;
   }
 
   .about-left {
@@ -297,6 +299,7 @@
     width: 100%;
   }
 
+  .about-photo-card,
   .about-video-card {
     max-width: 100%;
   }
@@ -305,8 +308,15 @@
     max-width: 100%;
   }
 
+  .about-me h3 {
+    font-size: 16px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
   .about-me p {
-    font-size: 17px;
+    font-size: clamp(14px, 4vw, 17px);
     line-height: 1.6;
+    letter-spacing: 0.2px;
   }
 }

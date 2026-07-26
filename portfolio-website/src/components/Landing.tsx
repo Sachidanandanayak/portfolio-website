@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import "./styles/Landing.css";
 import { config } from "../config";
+import SocialIcons from "./SocialIcons";
 
 const Landing = () => {
   const nameParts = config.developer.fullName.split(" ");
@@ -9,7 +10,15 @@ const Landing = () => {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [videoEnded, setVideoEnded] = useState<boolean>(false);
+
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [hasEnded, setHasEnded] = useState<boolean>(false);
+  const isPlayingRef = useRef<boolean>(false);
+
+  // Toast Hint State
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastVisible, setToastVisible] = useState<boolean>(false);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 3D Parallax Tilt State
   const cardRef = useRef<HTMLDivElement>(null);
@@ -21,116 +30,100 @@ const Landing = () => {
     isHovered: false,
   });
 
-  useEffect(() => {
+  const showToast = (message: string) => {
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current);
+    }
+    setToastMessage(message);
+    setToastVisible(true);
+
+    toastTimerRef.current = setTimeout(() => {
+      setToastVisible(false);
+    }, 2000);
+  };
+
+  const toggleVideoState = async () => {
     const video = videoRef.current;
     if (!video) return;
 
-    let handleFirstInteraction: (() => void) | null = null;
-    let handleScroll: (() => void) | null = null;
-    let loaderFinishListener: (() => void) | null = null;
-
-    const startPlayback = () => {
-      if (!videoRef.current) return;
-      const v = videoRef.current;
-
-      try {
-        v.currentTime = 0;
-      } catch {
-        // Ignore if metadata is loading
+    try {
+      if (video.ended) {
+        video.currentTime = 0;
+        video.muted = false;
+        video.volume = 1;
+        await video.play();
+        isPlayingRef.current = true;
+        setIsPlaying(true);
+        setHasEnded(false);
+        showToast("☝ Tap anywhere to pause");
+      } else if (!video.paused) {
+        video.pause();
+        isPlayingRef.current = false;
+        setIsPlaying(false);
+        showToast("☝ Tap anywhere to resume");
+      } else {
+        // Video is paused or in initial state -> play/resume with audio from current timestamp
+        video.muted = false;
+        video.volume = 1;
+        await video.play();
+        isPlayingRef.current = true;
+        setIsPlaying(true);
+        setHasEnded(false);
+        showToast("☝ Tap anywhere to pause");
       }
-      v.volume = 1;
-      v.muted = false;
-      v.defaultMuted = false;
+    } catch (err) {
+      isPlayingRef.current = false;
+      setIsPlaying(false);
+    }
+  };
 
-      v.play()
-        .then(() => {
-          // Audible autoplay succeeded!
-        })
-        .catch(() => {
-          // Fall back to muted autoplay if browser blocks unmuted play
-          v.muted = true;
-          v.play().catch(() => {});
+  useEffect(() => {
+    // Single global pointerdown listener for non-interactive tap anywhere toggle
+    const handlePointerDown = (e: PointerEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
 
-          // Listen for first user interaction to unmute
-          handleFirstInteraction = () => {
-            if (videoRef.current) {
-              videoRef.current.muted = false;
-              videoRef.current.defaultMuted = false;
-              videoRef.current.volume = 1;
-              if (videoRef.current.paused && !videoRef.current.ended) {
-                videoRef.current.play().catch(() => {});
-              }
-            }
-            if (handleFirstInteraction) {
-              window.removeEventListener("click", handleFirstInteraction);
-              window.removeEventListener("pointerdown", handleFirstInteraction);
-              window.removeEventListener("touchstart", handleFirstInteraction);
-              window.removeEventListener("keydown", handleFirstInteraction);
-            }
-          };
+      // Ignore if user clicked on any interactive element (buttons, links, inputs, navbar, social links)
+      if (
+        target.closest(
+          'a, button, input, textarea, select, [role="button"], [data-no-video-toggle]'
+        )
+      ) {
+        return;
+      }
 
-          window.addEventListener("click", handleFirstInteraction);
-          window.addEventListener("pointerdown", handleFirstInteraction);
-          window.addEventListener("touchstart", handleFirstInteraction);
-          window.addEventListener("keydown", handleFirstInteraction);
-        });
-
-      // Scroll listener: pause video ONLY when scrolled down past top hero section (>250px)
-      handleScroll = () => {
-        if (videoRef.current) {
-          if (window.scrollY > 250) {
-            if (!videoRef.current.paused) {
-              videoRef.current.pause();
-            }
-          } else {
-            if (videoRef.current.paused && !videoRef.current.ended) {
-              videoRef.current.play().catch(() => {});
-            }
-          }
-        }
-      };
-
-      window.addEventListener("scroll", handleScroll);
+      toggleVideoState();
     };
 
-    // If loader is active, wait until it finishes (5.0s) so video doesn't play invisibly behind loader
-    const loaderActive = document.querySelector(".premium-loader-overlay");
-    if (loaderActive) {
-      loaderFinishListener = () => {
-        startPlayback();
-        if (loaderFinishListener) {
-          window.removeEventListener("portfolioLoaderFinished", loaderFinishListener);
-        }
-      };
-      window.addEventListener("portfolioLoaderFinished", loaderFinishListener);
-    } else {
-      startPlayback();
-    }
+    window.addEventListener("pointerdown", handlePointerDown, { passive: true });
 
     return () => {
-      if (handleScroll) {
-        window.removeEventListener("scroll", handleScroll);
-      }
-      if (loaderFinishListener) {
-        window.removeEventListener("portfolioLoaderFinished", loaderFinishListener);
-      }
-      if (handleFirstInteraction) {
-        window.removeEventListener("click", handleFirstInteraction);
-        window.removeEventListener("pointerdown", handleFirstInteraction);
-        window.removeEventListener("touchstart", handleFirstInteraction);
-        window.removeEventListener("keydown", handleFirstInteraction);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      if (toastTimerRef.current) {
+        clearTimeout(toastTimerRef.current);
       }
     };
   }, []);
 
-  const handleVideoClick = () => {
-    if (videoEnded && videoRef.current) {
-      const video = videoRef.current;
-      video.currentTime = 0;
-      video.muted = false;
-      video.defaultMuted = false;
-      video.volume = 1;
-      video.play().then(() => setVideoEnded(false)).catch(() => {});
+  const handleVideoEnded = () => {
+    isPlayingRef.current = false;
+    setIsPlaying(false);
+    setHasEnded(true);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0; // Resets to frame 0 so video preview displays
+    }
+    showToast("↻ Tap anywhere to replay");
+  };
+
+  const handleVideoPlay = () => {
+    isPlayingRef.current = true;
+    setIsPlaying(true);
+  };
+
+  const handleVideoPause = () => {
+    if (videoRef.current && !videoRef.current.ended) {
+      isPlayingRef.current = false;
+      setIsPlaying(false);
     }
   };
 
@@ -245,22 +238,69 @@ const Landing = () => {
               <video
                 ref={videoRef}
                 className="hero-video-element"
-                autoPlay
                 playsInline
-                preload="auto"
-                poster="/images/photo.jpg.jpeg"
-                onEnded={() => setVideoEnded(true)}
-                onClick={handleVideoClick}
-                style={{ cursor: videoEnded ? "pointer" : "default" }}
+                preload="metadata"
+                onPlay={handleVideoPlay}
+                onPause={handleVideoPause}
+                onEnded={handleVideoEnded}
               >
                 <source src="/new_video.mp4.mp4" type="video/mp4" />
                 <source src="/new_video.mp4" type="video/mp4" />
                 <source src="/about-me.mp4.mp4" type="video/mp4" />
                 <source src="/about-me.mp4" type="video/mp4" />
               </video>
+
+              {/* Initial Overlay Button when video has NOT played yet */}
+              {!isPlaying && !hasEnded && (
+                <div 
+                  className="hero-video-overlay" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleVideoState();
+                  }}
+                >
+                  <button className="hero-video-play-btn" aria-label="Play Introduction Video">
+                    <svg className="play-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <span>PLAY INTRODUCTION</span>
+                    <span className="video-duration">20 SEC</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Replay Overlay when Video Finishes */}
+              {!isPlaying && hasEnded && (
+                <div 
+                  className="hero-video-overlay" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleVideoState();
+                  }}
+                >
+                  <button className="hero-video-play-btn replay-mode" aria-label="Replay Introduction Video">
+                    <svg className="replay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+                      <polyline points="1 4 1 10 7 10"/>
+                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                    </svg>
+                    <span>REPLAY INTRODUCTION</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Floating Toast Notification Pill */}
+              <div className={`hero-video-toast ${toastVisible ? "show" : ""}`}>
+                <svg className="toast-icon" viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
+                  <path d="M9 11.24V7.5a2.5 2.5 0 0 1 5 0v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26A1.99 1.99 0 0 0 13.4 13.5H13V7.5a1.5 1.5 0 0 0-3 0v10.18l-3.37-1.12a1.5 1.5 0 0 0-1.74.55c-.38.56-.34 1.3.1 1.82l4.89 5.86c.46.55 1.14.86 1.86.86h6.76c1.08 0 2.02-.75 2.23-1.81l1.01-5.07c.18-.89-.25-1.81-1.05-2.21z"/>
+                </svg>
+                <span>{toastMessage}</span>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Social Icons */}
+        <SocialIcons />
       </div>
     </div>
   );

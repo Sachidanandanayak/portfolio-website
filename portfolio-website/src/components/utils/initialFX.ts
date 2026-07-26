@@ -17,7 +17,7 @@ export function initialFX() {
   }
   mainEl.classList.add("main-active");
   gsap.to("body", {
-    backgroundColor: "#020B16",
+    backgroundColor: "#000000",
     duration: 0.5,
     delay: 1,
   });

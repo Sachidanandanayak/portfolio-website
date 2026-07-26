@@ -138,19 +138,30 @@ a.contact-social:hover {
 @media only screen and (max-width: 900px) {
   .contact-flex {
     flex-direction: column;
-    gap: 40px;
+    gap: 36px;
   }
   .contact-flex p {
     margin-bottom: 0px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .contact-flex p a {
+    word-break: break-all;
   }
   .contact-flex h4 {
-    margin-top: 20px;
+    margin-top: 16px;
   }
   .contact-section {
-    margin-top: 50px;
+    margin-top: 40px;
     padding-bottom: 50px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
   .contact-container {
-    width: calc(100% - 25px);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .contact-section h3 {
+    font-size: clamp(28px, 7vw, 36px);
   }
 }

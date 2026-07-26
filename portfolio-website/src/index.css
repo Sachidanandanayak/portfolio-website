@@ -9,7 +9,7 @@
   scroll-behavior: smooth;
   color-scheme: dark;
   color: #F8FAFC;
-  background-color: var(--backgroundColor);
+  background-color: #000000;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,9 +20,9 @@
   -moz-user-select: none;
 
   --accentColor: #F97316;
-  --backgroundColor: #050505;
-  --background-secondary: #0A0A0A;
-  --surface: #111111;
+  --backgroundColor: #000000;
+  --background-secondary: #000000;
+  --surface: #000000;
 
   --orange-primary: #F97316;
   --orange-bright: #FF6B00;
@@ -41,6 +41,24 @@
 
   --vh: 100vh;
   --vh: 100svh;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background: #000000 !important;
+  background-color: #000000 !important;
 }
 
 h1,
@@ -157,8 +175,8 @@ body {
   margin-bottom: 0;
   padding-top: 150px;
   padding-bottom: 150px;
-  background: linear-gradient(180deg, rgba(2, 11, 22, 0.95) 0%, rgba(2, 11, 22, 0.98) 100%);
-  background-color: var(--backgroundColor);
+  background: #000000;
+  background-color: #000000;
   overflow: hidden;
   display: flex;
   flex-direction: column;

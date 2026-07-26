@@ -304,6 +304,12 @@
   .work-section {
     height: auto;
     min-height: auto;
+    overflow: hidden;
+  }
+
+  .work-flex::before,
+  .work-flex::after {
+    display: none;
   }
 
   .work-flex {
@@ -311,6 +317,7 @@
     margin-left: 0;
     padding-right: 0;
     gap: 0;
+    width: 100%;
   }
 
   .work-box {
@@ -318,8 +325,9 @@
     max-width: 100%;
     padding: 30px 15px;
     border-right: none;
-    border-bottom: 1px solid #363636;
+    border-bottom: 1px solid rgba(249, 115, 22, 0.2);
     gap: 20px;
+    box-sizing: border-box;
   }
 
   .work-flex .work-box:nth-child(even) {
@@ -327,22 +335,30 @@
   }
 
   .work-section h2 {
-    font-size: 36px;
-    margin-top: 50px;
+    font-size: clamp(32px, 7vw, 40px);
+    margin-top: 40px;
     margin-bottom: 20px;
+    text-align: center;
   }
 
   .work-title h3 {
-    font-size: 30px;
-    line-height: 30px;
+    font-size: 28px;
+    line-height: 28px;
   }
 
   .work-info h4 {
     font-size: 18px;
   }
 
+  .work-image {
+    width: 100%;
+  }
+
   .work-image img {
-    max-height: 200px;
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
   }
 
   .work-box-cta {

@@ -56,12 +56,12 @@ const PremiumLoader = () => {
 
         {/* Role Subtitle */}
         <h2 className={`loader-role ${stage >= 3 ? "show" : ""}`}>
-          CLOUD ENGINEER
+          CLOUD ENGINEER & FULL-STACK DEVELOPER
         </h2>
 
         {/* Loading Indicator */}
         <div className={`loader-bar-wrap ${stage >= 3 ? "show" : ""}`}>
-          <span className="loader-text">Loading...</span>
+          <span className="loader-text">LOADING...</span>
           <div className="loader-line-track">
             <div className="loader-line-fill"></div>
           </div>
