@@ -1,6 +1,6 @@
 import { TextSplitter } from "../../utils/textSplitter";
 import gsap from "gsap";
-import { lenis } from "../Navbar";
+import { lenis } from "./lenisInstance";
 
 export function initialFX() {
   const mainEl = document.getElementsByTagName("main")[0];

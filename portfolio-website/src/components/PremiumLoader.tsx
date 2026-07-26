@@ -1,51 +1,29 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "./styles/PremiumLoader.css";
 
 const PremiumLoader = () => {
-  const [percent, setPercent] = useState<number>(1);
+  const [stage, setStage] = useState<number>(0);
   const [fadingOut, setFadingOut] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
-
-  const animFrameRef = useRef<number | null>(null);
-  const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     // Lock scroll during loader duration
     document.body.style.overflow = "hidden";
 
-    // Smooth rAF progress 1% -> 100% over 4600ms (total duration ~5000ms including 100% hold)
-    const DURATION = 4600;
-
-    const animateProgress = (timestamp: number) => {
-      if (!startTimeRef.current) startTimeRef.current = timestamp;
-      const elapsed = timestamp - startTimeRef.current;
-      const rawProgress = Math.min(1, elapsed / DURATION);
-
-      // Calculate smooth percentage integer from 1 to 100
-      const currentPercent = Math.max(1, Math.min(100, Math.floor(rawProgress * 99) + 1));
-      setPercent(currentPercent);
-
-      if (rawProgress < 1) {
-        animFrameRef.current = requestAnimationFrame(animateProgress);
-      } else {
-        // Reached 100% -> Hold 100% visible briefly (200ms) then fade out smoothly
-        setTimeout(() => {
-          setFadingOut(true);
-          setTimeout(() => {
-            setHidden(true);
-            document.body.style.overflow = "";
-            window.dispatchEvent(new CustomEvent("portfolioLoaderFinished"));
-          }, 350); // 350ms fade transition
-        }, 200);
-      }
-    };
-
-    animFrameRef.current = requestAnimationFrame(animateProgress);
+    const t1 = setTimeout(() => setStage(1), 200);   // 0.2s: "Sachidananda Nayak" slides in
+    const t2 = setTimeout(() => setStage(2), 600);   // 0.6s: "CLOUD ENGINEER & FULL STACK DEVELOPER" appears
+    const t3 = setTimeout(() => setFadingOut(true), 3400); // 3.4s: Smooth fade-out begins
+    const t4 = setTimeout(() => {
+      setHidden(true);
+      document.body.style.overflow = "";
+      window.dispatchEvent(new CustomEvent("portfolioLoaderFinished"));
+    }, 4000); // 4.0s: Fully hidden, scroll restored, portfolio reveals
 
     return () => {
-      if (animFrameRef.current) {
-        cancelAnimationFrame(animFrameRef.current);
-      }
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
       document.body.style.overflow = "";
     };
   }, []);
@@ -62,36 +40,18 @@ const PremiumLoader = () => {
         <div className="loader-overlay-dark"></div>
       </div>
 
-      {/* Center Content */}
+      {/* Content Positioned at Bottom so Central Sphere Animation is Fully Visible */}
       <div className="loader-content">
-        {/* SN Badge */}
-        <div className="loader-logo show">
-          <span>SN</span>
-        </div>
+        <div className="loader-text-group">
+          {/* Developer Name in Black */}
+          <h1 className={`loader-name ${stage >= 1 ? "show" : ""}`}>
+            Sachidananda Nayak
+          </h1>
 
-        {/* Developer Name */}
-        <h1 className="loader-name show">
-          Sachidananda Nayak
-        </h1>
-
-        {/* Role Subtitle */}
-        <h2 className="loader-role show">
-          CLOUD ENGINEER & FULL-STACK DEVELOPER
-        </h2>
-
-        {/* Loading Indicator with Percentage Counter */}
-        <div className="loader-bar-wrap show">
-          <div className="loader-text-row">
-            <span className="loader-text">LOADING</span>
-            <span className="loader-percentage">{percent}%</span>
-          </div>
-
-          <div className="loader-line-track">
-            <div
-              className="loader-line-fill"
-              style={{ width: `${percent}%` }}
-            ></div>
-          </div>
+          {/* Role Subtitle in Black */}
+          <h2 className={`loader-role ${stage >= 2 ? "show" : ""}`}>
+            CLOUD ENGINEER & FULL STACK DEVELOPER
+          </h2>
         </div>
       </div>
     </div>

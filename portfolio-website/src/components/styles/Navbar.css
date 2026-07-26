@@ -78,8 +78,8 @@
 
 .sun-logo-container {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -109,12 +109,12 @@
 /* 2. Outer Glow Breathing Sun Core */
 .sun-core {
   position: relative;
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #FF8C00 0%, #FF6A00 65%, #C2410C 100%);
   border: 1.5px solid #FFC247;
-  box-shadow: 0 0 16px rgba(255, 106, 0, 0.65), 0 0 30px rgba(255, 140, 0, 0.35);
+  box-shadow: 0 0 18px rgba(255, 106, 0, 0.70), 0 0 35px rgba(255, 140, 0, 0.40);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,17 +125,17 @@
 
 @keyframes sunGlowBreathing {
   0% {
-    box-shadow: 0 0 14px rgba(255, 106, 0, 0.55), 0 0 25px rgba(255, 140, 0, 0.25);
+    box-shadow: 0 0 16px rgba(255, 106, 0, 0.60), 0 0 30px rgba(255, 140, 0, 0.30);
   }
   100% {
-    box-shadow: 0 0 24px rgba(255, 106, 0, 0.90), 0 0 45px rgba(255, 194, 71, 0.55);
+    box-shadow: 0 0 28px rgba(255, 106, 0, 0.95), 0 0 50px rgba(255, 194, 71, 0.65);
   }
 }
 
 /* Center SN Text inside Sun Core (does NOT rotate) */
 .sun-logo-text {
   font-family: "Geist", sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 900;
   letter-spacing: 0.5px;
   color: #FFFFFF;

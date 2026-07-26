@@ -4,16 +4,18 @@ import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import Lenis from "lenis";
 import "./styles/Navbar.css";
+import { config } from "../config";
+
+import { setLenis, lenis } from "./utils/lenisInstance";
 
 gsap.registerPlugin(ScrollTrigger);
-export let lenis: Lenis | null = null;
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     // Initialize Lenis smooth scroll
-    lenis = new Lenis({
+    const lenisInst = new Lenis({
       duration: 1.7,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
@@ -23,9 +25,10 @@ const Navbar = () => {
       touchMultiplier: 2,
       infinite: false,
     });
+    setLenis(lenisInst);
 
     // Start paused
-    lenis.stop();
+    lenisInst.stop();
 
     // Handle smooth scroll animation frame
     function raf(time: number) {
@@ -133,11 +136,11 @@ const Navbar = () => {
         </a>
 
         <a
-          href="mailto:metisachin@gmail.com"
+          href={`mailto:${config.contact.email}`}
           className="navbar-connect"
           data-cursor="disable"
         >
-          metisachin@gmail.com
+          {config.contact.email}
         </a>
 
         <button

@@ -278,6 +278,14 @@ h2.landing-info-h2 {
   transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+.hero-video-card.is-waiting {
+  cursor: pointer;
+}
+
+.hero-video-card.is-playing {
+  cursor: default;
+}
+
 .hero-video-card:hover {
   border-color: #F97316;
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55), 0 0 35px rgba(249, 115, 22, 0.20);
@@ -291,63 +299,27 @@ h2.landing-info-h2 {
   display: block;
 }
 
-/* Dedicated Video Control Row & Pill Button Below Video */
-.hero-video-controls-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 18px;
-  width: 100%;
-  position: relative;
-  z-index: 10;
-}
-
-.hero-video-control-btn {
-  background: rgba(10, 10, 10, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: #FFFFFF;
-  font-family: "Geist", sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 1.2px;
-  border: 1.5px solid #F97316;
-  border-radius: 30px;
-  padding: 12px 24px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
+/* Translucent Center Play / Replay Overlay Icon */
+.hero-video-center-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(5, 5, 5, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(249, 115, 22, 0.65);
   box-shadow: 0 0 20px rgba(249, 115, 22, 0.35), 0 4px 15px rgba(0, 0, 0, 0.6);
-  transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-  pointer-events: auto;
-  user-select: none;
-}
-
-.hero-video-control-btn:hover {
-  transform: scale(1.04);
-  border-color: #FF6B00;
-  box-shadow: 0 0 30px rgba(249, 115, 22, 0.60), 0 6px 20px rgba(0, 0, 0, 0.7);
-}
-
-.hero-video-control-btn .control-icon {
   color: #F97316;
-  transition: transform 0.2s ease;
-}
-
-.hero-video-control-btn:hover .control-icon {
-  transform: scale(1.1);
-}
-
-.hero-video-control-btn.is-playing {
-  border-color: rgba(249, 115, 22, 0.7);
-}
-
-.hero-video-control-btn.is-ended {
-  border-color: #F59E0B;
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Laptop Responsiveness */
@@ -381,9 +353,10 @@ h2.landing-info-h2 {
   }
 
   .landing-intro h1 {
-    font-size: clamp(24px, 7.5vw, 36px);
+    font-size: clamp(22px, 6vw, 34px);
     line-height: 1.2;
     letter-spacing: 1px;
+    white-space: nowrap;
     word-break: keep-all;
     overflow-wrap: normal;
   }
@@ -408,7 +381,7 @@ h2.landing-info-h2 {
 
   /* Full Width Uncropped Video Display on Mobile */
   .hero-video-frame {
-    width: calc(100% - 32px);
+    width: calc(100% - 24px);
     max-width: 600px;
     height: auto;
     aspect-ratio: auto;
@@ -435,26 +408,7 @@ h2.landing-info-h2 {
     object-fit: contain;
     border-radius: 20px;
     display: block;
-  }
-
-  /* Compact 44px Circular Video Control Button on Mobile */
-  .hero-video-controls-row {
-    margin-top: 12px;
-  }
-
-  .hero-video-control-btn {
-    width: 44px;
-    height: 44px;
-    min-height: 44px;
-    max-width: 44px;
-    padding: 0;
-    border-radius: 50%;
-    gap: 0;
-    box-shadow: 0 0 15px rgba(249, 115, 22, 0.35), 0 4px 12px rgba(0, 0, 0, 0.6);
-  }
-
-  .hero-video-control-btn .btn-text {
-    display: none;
+    aspect-ratio: 16 / 9;
   }
 }
 

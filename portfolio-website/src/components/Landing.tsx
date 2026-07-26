@@ -25,43 +25,34 @@ const Landing = () => {
     isHovered: false,
   });
 
-  // Dedicated Video Control Button Click Handler
-  const handleControlBtnClick = async () => {
+  // Direct PLAY / REPLAY ONLY Handler (NO PAUSE ALLOWED)
+  const handleVideoTap = () => {
     const video = videoRef.current;
     if (!video) return;
 
+    // If video is ALREADY playing, DO NOTHING (NO PAUSE ALLOWED)
+    if (isPlaying && !video.paused && !video.ended) {
+      return;
+    }
+
     try {
       if (video.ended || hasEnded) {
-        // Replay from beginning with audio
         video.currentTime = 0;
-        video.muted = false;
-        video.volume = 1;
-        await video.play();
-        isPlayingRef.current = true;
-        setIsPlaying(true);
-        setHasEnded(false);
-      } else if (isPlaying) {
-        // Pause BOTH video and audio at exact current timestamp
-        video.pause();
-        isPlayingRef.current = false;
-        setIsPlaying(false);
-      } else {
-        // Resume from current timestamp WITH audio
-        video.muted = false;
-        video.volume = 1;
-        await video.play();
-        isPlayingRef.current = true;
-        setIsPlaying(true);
-        setHasEnded(false);
       }
+      video.muted = false;
+      video.volume = 1;
+      video.play().then(() => {
+        isPlayingRef.current = true;
+        setIsPlaying(true);
+        setHasEnded(false);
+      }).catch(() => {});
     } catch (err) {
-      isPlayingRef.current = false;
-      setIsPlaying(false);
+      // Browser autoplay policy catch fallback
     }
   };
 
   useEffect(() => {
-    // Initial silent/audible play attempt on mount
+    // Initial play attempt on mount
     const video = videoRef.current;
     if (video) {
       video.play().then(() => {
@@ -72,6 +63,28 @@ const Landing = () => {
         setIsPlaying(false);
       });
     }
+
+    // Automatically play video with audio on first page click/tap anywhere
+    const handleFirstPageInteraction = () => {
+      const v = videoRef.current;
+      if (v && v.paused && !v.ended) {
+        v.muted = false;
+        v.volume = 1;
+        v.play().then(() => {
+          isPlayingRef.current = true;
+          setIsPlaying(true);
+          setHasEnded(false);
+        }).catch(() => {});
+      }
+    };
+
+    window.addEventListener("click", handleFirstPageInteraction, { once: true });
+    window.addEventListener("touchstart", handleFirstPageInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener("click", handleFirstPageInteraction);
+      window.removeEventListener("touchstart", handleFirstPageInteraction);
+    };
   }, []);
 
   const handleVideoEnded = () => {
@@ -79,7 +92,7 @@ const Landing = () => {
     setIsPlaying(false);
     setHasEnded(true);
     if (videoRef.current) {
-      videoRef.current.currentTime = 0; // Return to preview frame
+      videoRef.current.currentTime = 0; // Return to first/preview frame
     }
   };
 
@@ -87,13 +100,6 @@ const Landing = () => {
     isPlayingRef.current = true;
     setIsPlaying(true);
     setHasEnded(false);
-  };
-
-  const handleVideoPause = () => {
-    if (videoRef.current && !videoRef.current.ended) {
-      isPlayingRef.current = false;
-      setIsPlaying(false);
-    }
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -194,7 +200,8 @@ const Landing = () => {
             
             <div 
               ref={cardRef}
-              className={`hero-video-card ${tiltStyle.isHovered ? "is-hovered" : ""}`}
+              className={`hero-video-card ${isPlaying ? "is-playing" : "is-waiting"} ${tiltStyle.isHovered ? "is-hovered" : ""}`}
+              onClick={handleVideoTap}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
               style={{
@@ -210,7 +217,6 @@ const Landing = () => {
                 playsInline
                 preload="metadata"
                 onPlay={handleVideoPlay}
-                onPause={handleVideoPause}
                 onEnded={handleVideoEnded}
               >
                 <source src="/new_video.mp4.mp4" type="video/mp4" />
@@ -218,45 +224,15 @@ const Landing = () => {
                 <source src="/about-me.mp4.mp4" type="video/mp4" />
                 <source src="/about-me.mp4" type="video/mp4" />
               </video>
-            </div>
 
-            {/* Dedicated Professional Video Control Button Centered Directly BELOW Video Card */}
-            <div className="hero-video-controls-row">
-              <button
-                className={`hero-video-control-btn ${isPlaying ? "is-playing" : ""} ${hasEnded ? "is-ended" : ""}`}
-                onClick={handleControlBtnClick}
-                aria-label={
-                  isPlaying
-                    ? "Pause introduction"
-                    : hasEnded
-                    ? "Replay introduction"
-                    : "Resume introduction"
-                }
-              >
-                {isPlaying ? (
-                  <>
-                    <svg className="control-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-                      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                    </svg>
-                    <span className="btn-text">PAUSE INTRODUCTION</span>
-                  </>
-                ) : hasEnded ? (
-                  <>
-                    <svg className="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
-                      <polyline points="1 4 1 10 7 10"/>
-                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-                    </svg>
-                    <span className="btn-text">REPLAY INTRODUCTION</span>
-                  </>
-                ) : (
-                  <>
-                    <svg className="control-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                    <span className="btn-text">RESUME INTRODUCTION</span>
-                  </>
-                )}
-              </button>
+              {/* Translucent Center Play Overlay Icon (Shown ONLY when waiting/paused/ended) */}
+              {!isPlaying && (
+                <div className="hero-video-center-icon" aria-label="Play Introduction">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              )}
             </div>
           </div>
         </div>
