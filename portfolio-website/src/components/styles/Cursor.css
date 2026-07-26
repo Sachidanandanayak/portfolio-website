@@ -10,9 +10,10 @@
   position: absolute;
   border-radius: 50%;
   background: radial-gradient(circle, #F97316 0%, #F59E0B 70%, transparent 100%);
-  box-shadow: 0 0 12px #F97316, 0 0 24px #F59E0B;
+  box-shadow: 0 0 10px #F97316, 0 0 20px #F59E0B;
   pointer-events: none;
   transform: translate(-50%, -50%);
+  will-change: transform, opacity;
 }
 
 .cursor-main {
@@ -46,5 +47,13 @@
 @media only screen and (min-width: 600px) {
   .cursor-main {
     --size: 38px;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .spark-container,
+  .cursor-main {
+    display: none !important;
   }
 }

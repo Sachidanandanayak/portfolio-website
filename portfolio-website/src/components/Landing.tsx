@@ -15,11 +15,6 @@ const Landing = () => {
   const [hasEnded, setHasEnded] = useState<boolean>(false);
   const isPlayingRef = useRef<boolean>(false);
 
-  // Toast Hint State
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [toastVisible, setToastVisible] = useState<boolean>(false);
-  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   // 3D Parallax Tilt State
   const cardRef = useRef<HTMLDivElement>(null);
   const [tiltStyle, setTiltStyle] = useState({
@@ -30,24 +25,14 @@ const Landing = () => {
     isHovered: false,
   });
 
-  const showToast = (message: string) => {
-    if (toastTimerRef.current) {
-      clearTimeout(toastTimerRef.current);
-    }
-    setToastMessage(message);
-    setToastVisible(true);
-
-    toastTimerRef.current = setTimeout(() => {
-      setToastVisible(false);
-    }, 2000);
-  };
-
-  const toggleVideoState = async () => {
+  // Dedicated Video Control Button Click Handler
+  const handleControlBtnClick = async () => {
     const video = videoRef.current;
     if (!video) return;
 
     try {
-      if (video.ended) {
+      if (video.ended || hasEnded) {
+        // Replay from beginning with audio
         video.currentTime = 0;
         video.muted = false;
         video.volume = 1;
@@ -55,21 +40,19 @@ const Landing = () => {
         isPlayingRef.current = true;
         setIsPlaying(true);
         setHasEnded(false);
-        showToast("☝ Tap anywhere to pause");
-      } else if (!video.paused) {
+      } else if (isPlaying) {
+        // Pause BOTH video and audio at exact current timestamp
         video.pause();
         isPlayingRef.current = false;
         setIsPlaying(false);
-        showToast("☝ Tap anywhere to resume");
       } else {
-        // Video is paused or in initial state -> play/resume with audio from current timestamp
+        // Resume from current timestamp WITH audio
         video.muted = false;
         video.volume = 1;
         await video.play();
         isPlayingRef.current = true;
         setIsPlaying(true);
         setHasEnded(false);
-        showToast("☝ Tap anywhere to pause");
       }
     } catch (err) {
       isPlayingRef.current = false;
@@ -78,31 +61,17 @@ const Landing = () => {
   };
 
   useEffect(() => {
-    // Single global pointerdown listener for non-interactive tap anywhere toggle
-    const handlePointerDown = (e: PointerEvent) => {
-      const target = e.target as HTMLElement | null;
-      if (!target) return;
-
-      // Ignore if user clicked on any interactive element (buttons, links, inputs, navbar, social links)
-      if (
-        target.closest(
-          'a, button, input, textarea, select, [role="button"], [data-no-video-toggle]'
-        )
-      ) {
-        return;
-      }
-
-      toggleVideoState();
-    };
-
-    window.addEventListener("pointerdown", handlePointerDown, { passive: true });
-
-    return () => {
-      window.removeEventListener("pointerdown", handlePointerDown);
-      if (toastTimerRef.current) {
-        clearTimeout(toastTimerRef.current);
-      }
-    };
+    // Initial silent/audible play attempt on mount
+    const video = videoRef.current;
+    if (video) {
+      video.play().then(() => {
+        isPlayingRef.current = true;
+        setIsPlaying(true);
+      }).catch(() => {
+        isPlayingRef.current = false;
+        setIsPlaying(false);
+      });
+    }
   }, []);
 
   const handleVideoEnded = () => {
@@ -110,14 +79,14 @@ const Landing = () => {
     setIsPlaying(false);
     setHasEnded(true);
     if (videoRef.current) {
-      videoRef.current.currentTime = 0; // Resets to frame 0 so video preview displays
+      videoRef.current.currentTime = 0; // Return to preview frame
     }
-    showToast("↻ Tap anywhere to replay");
   };
 
   const handleVideoPlay = () => {
     isPlayingRef.current = true;
     setIsPlaying(true);
+    setHasEnded(false);
   };
 
   const handleVideoPause = () => {
@@ -249,52 +218,45 @@ const Landing = () => {
                 <source src="/about-me.mp4.mp4" type="video/mp4" />
                 <source src="/about-me.mp4" type="video/mp4" />
               </video>
+            </div>
 
-              {/* Initial Overlay Button when video has NOT played yet */}
-              {!isPlaying && !hasEnded && (
-                <div 
-                  className="hero-video-overlay" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleVideoState();
-                  }}
-                >
-                  <button className="hero-video-play-btn" aria-label="Play Introduction Video">
-                    <svg className="play-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-                      <path d="M8 5v14l11-7z"/>
+            {/* Dedicated Professional Video Control Button Centered Directly BELOW Video Card */}
+            <div className="hero-video-controls-row">
+              <button
+                className={`hero-video-control-btn ${isPlaying ? "is-playing" : ""} ${hasEnded ? "is-ended" : ""}`}
+                onClick={handleControlBtnClick}
+                aria-label={
+                  isPlaying
+                    ? "Pause Introduction Video"
+                    : hasEnded
+                    ? "Replay Introduction Video"
+                    : "Resume Introduction Video"
+                }
+              >
+                {isPlaying ? (
+                  <>
+                    <svg className="control-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
                     </svg>
-                    <span>PLAY INTRODUCTION</span>
-                    <span className="video-duration">20 SEC</span>
-                  </button>
-                </div>
-              )}
-
-              {/* Replay Overlay when Video Finishes */}
-              {!isPlaying && hasEnded && (
-                <div 
-                  className="hero-video-overlay" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleVideoState();
-                  }}
-                >
-                  <button className="hero-video-play-btn replay-mode" aria-label="Replay Introduction Video">
-                    <svg className="replay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+                    <span>PAUSE INTRODUCTION</span>
+                  </>
+                ) : hasEnded ? (
+                  <>
+                    <svg className="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
                       <polyline points="1 4 1 10 7 10"/>
                       <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
                     </svg>
                     <span>REPLAY INTRODUCTION</span>
-                  </button>
-                </div>
-              )}
-
-              {/* Floating Toast Notification Pill */}
-              <div className={`hero-video-toast ${toastVisible ? "show" : ""}`}>
-                <svg className="toast-icon" viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
-                  <path d="M9 11.24V7.5a2.5 2.5 0 0 1 5 0v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26A1.99 1.99 0 0 0 13.4 13.5H13V7.5a1.5 1.5 0 0 0-3 0v10.18l-3.37-1.12a1.5 1.5 0 0 0-1.74.55c-.38.56-.34 1.3.1 1.82l4.89 5.86c.46.55 1.14.86 1.86.86h6.76c1.08 0 2.02-.75 2.23-1.81l1.01-5.07c.18-.89-.25-1.81-1.05-2.21z"/>
-                </svg>
-                <span>{toastMessage}</span>
-              </div>
+                  </>
+                ) : (
+                  <>
+                    <svg className="control-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <span>RESUME INTRODUCTION</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>

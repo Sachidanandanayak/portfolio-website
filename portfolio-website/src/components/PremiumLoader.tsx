@@ -1,31 +1,51 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./styles/PremiumLoader.css";
 
 const PremiumLoader = () => {
-  const [stage, setStage] = useState<number>(0);
+  const [percent, setPercent] = useState<number>(1);
   const [fadingOut, setFadingOut] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
 
+  const animFrameRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number | null>(null);
+
   useEffect(() => {
-    // Lock scroll during 5-second loader duration
+    // Lock scroll during loader duration
     document.body.style.overflow = "hidden";
 
-    const t1 = setTimeout(() => setStage(1), 300);   // 0.3s: SN appears
-    const t2 = setTimeout(() => setStage(2), 800);   // 0.8s: Sachidananda Nayak name appears
-    const t3 = setTimeout(() => setStage(3), 1400);  // 1.4s: CLOUD ENGINEER role + line appears
-    const t4 = setTimeout(() => setFadingOut(true), 4500); // 4.5s: Exit fadeout begins
-    const t5 = setTimeout(() => {
-      setHidden(true);
-      document.body.style.overflow = "";
-      window.dispatchEvent(new CustomEvent("portfolioLoaderFinished"));
-    }, 5000); // 5.0s: Fully hidden, scroll restored, hero video starts
+    // Smooth rAF progress 1% -> 100% over 4600ms (total duration ~5000ms including 100% hold)
+    const DURATION = 4600;
+
+    const animateProgress = (timestamp: number) => {
+      if (!startTimeRef.current) startTimeRef.current = timestamp;
+      const elapsed = timestamp - startTimeRef.current;
+      const rawProgress = Math.min(1, elapsed / DURATION);
+
+      // Calculate smooth percentage integer from 1 to 100
+      const currentPercent = Math.max(1, Math.min(100, Math.floor(rawProgress * 99) + 1));
+      setPercent(currentPercent);
+
+      if (rawProgress < 1) {
+        animFrameRef.current = requestAnimationFrame(animateProgress);
+      } else {
+        // Reached 100% -> Hold 100% visible briefly (200ms) then fade out smoothly
+        setTimeout(() => {
+          setFadingOut(true);
+          setTimeout(() => {
+            setHidden(true);
+            document.body.style.overflow = "";
+            window.dispatchEvent(new CustomEvent("portfolioLoaderFinished"));
+          }, 350); // 350ms fade transition
+        }, 200);
+      }
+    };
+
+    animFrameRef.current = requestAnimationFrame(animateProgress);
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
-      clearTimeout(t5);
+      if (animFrameRef.current) {
+        cancelAnimationFrame(animFrameRef.current);
+      }
       document.body.style.overflow = "";
     };
   }, []);
@@ -34,7 +54,7 @@ const PremiumLoader = () => {
 
   return (
     <div className={`premium-loader-overlay ${fadingOut ? "fade-out" : ""}`}>
-      {/* Futuristic Purple Video Background (Shared with TechStack) */}
+      {/* Background Video & Dark Gradient Overlay */}
       <div className="loader-video-container">
         <video autoPlay loop muted playsInline className="loader-video">
           <source src="/video/video.webm" type="video/webm" />
@@ -45,25 +65,32 @@ const PremiumLoader = () => {
       {/* Center Content */}
       <div className="loader-content">
         {/* SN Badge */}
-        <div className={`loader-logo ${stage >= 1 ? "show" : ""}`}>
+        <div className="loader-logo show">
           <span>SN</span>
         </div>
 
         {/* Developer Name */}
-        <h1 className={`loader-name ${stage >= 2 ? "show" : ""}`}>
+        <h1 className="loader-name show">
           Sachidananda Nayak
         </h1>
 
         {/* Role Subtitle */}
-        <h2 className={`loader-role ${stage >= 3 ? "show" : ""}`}>
+        <h2 className="loader-role show">
           CLOUD ENGINEER & FULL-STACK DEVELOPER
         </h2>
 
-        {/* Loading Indicator */}
-        <div className={`loader-bar-wrap ${stage >= 3 ? "show" : ""}`}>
-          <span className="loader-text">LOADING...</span>
+        {/* Loading Indicator with Percentage Counter */}
+        <div className="loader-bar-wrap show">
+          <div className="loader-text-row">
+            <span className="loader-text">LOADING</span>
+            <span className="loader-percentage">{percent}%</span>
+          </div>
+
           <div className="loader-line-track">
-            <div className="loader-line-fill"></div>
+            <div
+              className="loader-line-fill"
+              style={{ width: `${percent}%` }}
+            ></div>
           </div>
         </div>
       </div>

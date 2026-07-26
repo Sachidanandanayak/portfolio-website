@@ -291,95 +291,63 @@ h2.landing-info-h2 {
   display: block;
 }
 
-/* Hero Video Overlay & Play/Replay Button */
-.hero-video-overlay {
-  position: absolute;
-  inset: 0;
+/* Dedicated Video Control Row & Pill Button Below Video */
+.hero-video-controls-row {
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at center, rgba(5, 5, 5, 0.20) 0%, rgba(5, 5, 5, 0.40) 100%);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  border-radius: 24px;
-  z-index: 5;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
+  align-items: center;
+  margin-top: 18px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
 }
 
-.hero-video-play-btn {
-  background: linear-gradient(135deg, #FF6B00 0%, #F97316 100%);
-  color: #050505;
+.hero-video-control-btn {
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #FFFFFF;
   font-family: "Geist", sans-serif;
   font-weight: 700;
   font-size: 13px;
-  letter-spacing: 1px;
-  border: none;
+  letter-spacing: 1.2px;
+  border: 1.5px solid #F97316;
   border-radius: 30px;
-  padding: 12px 22px;
+  padding: 12px 24px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   cursor: pointer;
-  box-shadow: 0 0 25px rgba(249, 115, 22, 0.45), 0 4px 15px rgba(0, 0, 0, 0.5);
-  transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.25s ease;
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.35), 0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
   pointer-events: auto;
+  user-select: none;
 }
 
-.hero-video-play-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 35px rgba(249, 115, 22, 0.65), 0 6px 20px rgba(0, 0, 0, 0.6);
+.hero-video-control-btn:hover {
+  transform: scale(1.04);
+  border-color: #FF6B00;
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.60), 0 6px 20px rgba(0, 0, 0, 0.7);
 }
 
-.hero-video-play-btn .video-duration {
-  background: rgba(5, 5, 5, 0.25);
-  color: #050505;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
-
-.hero-video-play-btn.replay-mode {
-  background: linear-gradient(135deg, #F97316 0%, #FF6B00 100%);
-}
-
-/* Floating Toast Hint Pill */
-.hero-video-toast {
-  position: absolute;
-  bottom: 22px;
-  left: 50%;
-  transform: translateX(-50%) translateY(12px);
-  background: rgba(5, 5, 5, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(249, 115, 22, 0.55);
-  box-shadow: 0 0 20px rgba(249, 115, 22, 0.35), 0 8px 25px rgba(0, 0, 0, 0.7);
-  border-radius: 30px;
-  padding: 8px 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #FFFFFF;
-  font-family: "Geist", sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  pointer-events: none;
-  z-index: 15;
-  opacity: 0;
-  white-space: nowrap;
-  transition: opacity 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.hero-video-toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-.hero-video-toast .toast-icon {
+.hero-video-control-btn .control-icon {
   color: #F97316;
+  transition: transform 0.2s ease;
+}
+
+.hero-video-control-btn:hover .control-icon {
+  transform: scale(1.1);
+}
+
+.hero-video-control-btn.is-playing {
+  border-color: rgba(249, 115, 22, 0.7);
+}
+
+.hero-video-control-btn.is-ended {
+  border-color: #F59E0B;
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
 }
 
 /* Laptop Responsiveness */

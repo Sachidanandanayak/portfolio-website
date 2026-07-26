@@ -11,7 +11,7 @@ const Cursor = () => {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
-    // Direct GSAP quickSetter for ultra-high performance mouse tracking
+    // Direct GSAP quickSetter for high performance tracking
     const xSet = gsap.quickSetter(cursor, "x", "px");
     const ySet = gsap.quickSetter(cursor, "y", "px");
 
@@ -19,51 +19,73 @@ const Cursor = () => {
     const cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
     let lastSparkTime = 0;
+    const MAX_PARTICLES = 35;
 
-    // Interactive mouse spark particle generator
-    const createSpark = (x: number, y: number) => {
-      if (!sparkContainerRef.current) return;
+    // Interactive spark particle generator for desktop and mobile touch
+    const createSpark = (x: number, y: number, isBurst = false) => {
+      const container = sparkContainerRef.current;
+      if (!container) return;
+
       const now = Date.now();
-      if (now - lastSparkTime < 40) return; // Throttle to maintain 60FPS+
+      if (!isBurst && now - lastSparkTime < 35) return; // Throttle trail to 35ms
       lastSparkTime = now;
 
-      const spark = document.createElement("div");
-      spark.className = "spark-particle";
+      // Maintain max active particle limit for 60FPS mobile performance
+      while (container.children.length > MAX_PARTICLES) {
+        container.firstElementChild?.remove();
+      }
 
-      // Random particle spread, size, and direction
-      const size = Math.random() * 8 + 4;
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 30 + 10;
-      const destX = Math.cos(angle) * speed;
-      const destY = Math.sin(angle) * speed;
+      const colors = ["#FF6B00", "#F97316", "#F59E0B", "#FBBF24"];
+      const particleCount = isBurst ? 6 : 1;
 
-      spark.style.width = `${size}px`;
-      spark.style.height = `${size}px`;
-      spark.style.left = `${x}px`;
-      spark.style.top = `${y}px`;
+      for (let i = 0; i < particleCount; i++) {
+        const spark = document.createElement("div");
+        spark.className = "spark-particle";
 
-      sparkContainerRef.current.appendChild(spark);
+        const size = Math.random() * 6 + 4;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = isBurst ? Math.random() * 25 + 10 : Math.random() * 20 + 8;
+        const destX = Math.cos(angle) * speed;
+        const destY = Math.sin(angle) * speed;
 
-      gsap.to(spark, {
-        x: destX,
-        y: destY,
-        opacity: 0,
-        scale: 0.1,
-        duration: 0.75,
-        ease: "power2.out",
-        onComplete: () => {
-          spark.remove();
-        },
-      });
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        spark.style.width = `${size}px`;
+        spark.style.height = `${size}px`;
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+        spark.style.background = `radial-gradient(circle, ${color} 0%, transparent 100%)`;
+        spark.style.boxShadow = `0 0 10px ${color}`;
+
+        container.appendChild(spark);
+
+        gsap.to(spark, {
+          x: destX,
+          y: destY,
+          opacity: 0,
+          scale: 0.1,
+          duration: isBurst ? 0.6 : 0.7,
+          ease: "power2.out",
+          onComplete: () => {
+            spark.remove();
+          },
+        });
+      }
     };
 
-    const onMouseMove = (e: MouseEvent) => {
+    // Pointer handlers for Mouse & Touch
+    const handlePointerDown = (e: PointerEvent) => {
+      createSpark(e.clientX, e.clientY, true);
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
       mousePos.x = e.clientX;
       mousePos.y = e.clientY;
-      createSpark(e.clientX, e.clientY);
+      createSpark(e.clientX, e.clientY, false);
     };
 
-    document.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("pointerdown", handlePointerDown, { passive: true });
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
 
     let animationFrameId: number;
     const loop = () => {
@@ -108,7 +130,8 @@ const Cursor = () => {
     });
 
     return () => {
-      document.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointermove", handlePointerMove);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
